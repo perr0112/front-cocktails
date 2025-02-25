@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { fetchCocktails } from './services/cocktails';
 
-import cocktailcard from './components/cocktailcard.vue';
+import cocktailcard from './components/CocktailCard.vue';
 
 const cocktails = ref();
 
@@ -25,6 +25,8 @@ onMounted(async () => {
     <h1>🏖️ Beach Club</h1>
     <span>+ Menu</span>
   </header>
+  
+  <div class="line" style="margin-top: 1rem;"></div>
 
   <container>
     <h3>Découvrez nos trois cocktails phares du moment !</h3>
