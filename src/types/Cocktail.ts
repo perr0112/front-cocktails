@@ -3,6 +3,6 @@ export interface Cocktail {
     id: number;
     isAlcoholic: string;
     category: string;
-    ingrediens: string[];
+    ingredients: string[];
     thumbnail: string;
 }
