@@ -17,12 +17,34 @@ export const fetchCocktails = async (count: number = 3) => {
     const cocktails = [];
 
     for (let i = 0; i < count; i++) {
-        const cocktail = await fetchCocktail();
-        cocktails.push(cocktail.drinks[0]);
+        const res = await fetchCocktail();
+        const item = res?.drinks[0];
+
+        console.log(item, '--------');
+
+        const ingredientsPattern = new RegExp(/strIngredient\d+/);
+        const listIngrediens: any = [];
+
+        item && Object.keys(item).forEach((key) => {
+            if (ingredientsPattern.test(key) && item[key]) {
+                const ingredient = item[key];
+                listIngrediens.push(ingredient);
+                console.log(ingredient, '--------');
+            }
+        });
+
+        const cocktail = {
+            name: item?.strDrink,
+            id: item?.idDrink,
+            isAlcoholic: item?.strAlcoholic === 'Alcoholic',
+            category: item?.strCategory,
+            ingredients: listIngrediens,
+        }
+
+        cocktails.push(cocktail);
     }
 
-    console.log(cocktails);
-
+    console.log(cocktails, '--------');
 
     return cocktails;
 }
