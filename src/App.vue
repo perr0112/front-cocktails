@@ -1,47 +1,41 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script setup>
+import { onMounted, ref } from 'vue';
+import { fetchCocktails } from './services/cocktails';
+
+import cocktailcard from './components/cocktailcard.vue';
+
+const cocktails = ref();
+
+const loadCocktails = async () => {
+  try {
+    const res = await fetchCocktails(3);
+    cocktails.value = res;
+  } catch (error) {
+    console.error('Error fetching cocktails:', error);
+  }
+}
+
+onMounted(async () => {
+  await loadCocktails();
+})
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <h1>🏖️ Beach Club</h1>
+    <span>+ Menu</span>
   </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+  <container>
+    <h3>Découvrez nos trois cocktails phares du moment !</h3>
+    <div class="btn">Charger trois nouveaux cocktails</div>
+
+    <div class="cocktails">
+      <cocktailcard
+        v-for="cocktail in cocktails"
+        :cocktail="cocktail"
+      >
+      </cocktailcard>
+    </div>
+  </container>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
