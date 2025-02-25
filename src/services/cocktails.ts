@@ -39,6 +39,7 @@ export const fetchCocktails = async (count: number = 3) => {
             isAlcoholic: item?.strAlcoholic === 'Alcoholic',
             category: item?.strCategory,
             ingredients: listIngrediens,
+            thumbnail: item?.strDrinkThumb,
         }
 
         cocktails.push(cocktail);

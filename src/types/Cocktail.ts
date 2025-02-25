@@ -4,4 +4,5 @@ export interface Cocktail {
     isAlcoholic: string;
     category: string;
     ingrediens: string[];
+    thumbnail: string;
 }
