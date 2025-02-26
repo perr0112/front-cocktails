@@ -18,26 +18,28 @@ export const fetchCocktails = async (count: number = 3) => {
         const res = await fetchCocktail();
         const item = res?.drinks[0];
 
-        const ingredientsPattern = new RegExp(/strIngredient\d+/);
-        const listIngrediens: any = [];
+        if (item) {
+            const ingredientsPattern = new RegExp(/strIngredient\d+/);
+            const listIngrediens: string[] = [];
 
-        item && Object.keys(item).forEach((key) => {
-            if (ingredientsPattern.test(key) && item[key]) {
-                const ingredient = item[key];
-                listIngrediens.push(ingredient);
+            Object.keys(item).forEach((key) => {
+                if (ingredientsPattern.test(key) && item[key]) {
+                    const ingredient = item[key];
+                    listIngrediens.push(ingredient);
+                }
+            });
+
+            const cocktail = {
+                name: item?.strDrink,
+                id: item?.idDrink,
+                isAlcoholic: item?.strAlcoholic === 'Alcoholic',
+                category: item?.strCategory,
+                ingredients: listIngrediens,
+                thumbnail: item?.strDrinkThumb,
             }
-        });
 
-        const cocktail = {
-            name: item?.strDrink,
-            id: item?.idDrink,
-            isAlcoholic: item?.strAlcoholic === 'Alcoholic',
-            category: item?.strCategory,
-            ingredients: listIngrediens,
-            thumbnail: item?.strDrinkThumb,
+            cocktails.push(cocktail);
         }
-
-        cocktails.push(cocktail);
     }
 
     return cocktails;

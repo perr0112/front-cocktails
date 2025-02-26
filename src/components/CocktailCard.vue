@@ -26,7 +26,7 @@ defineProps<{
                     Liste des ingrédients
                 </p>
                 <div class="ingredients__list">
-                    <div class="ingredient" v-for="ingredient in cocktail.ingredients">
+                    <div class="ingredient" v-for="ingredient in cocktail.ingredients" :key="ingredient">
                         <span>{{ ingredient }}</span>
                     </div>
                 </div>

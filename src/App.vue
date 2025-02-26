@@ -1,9 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { fetchCocktails } from './services/cocktails';
 import cocktailcard from './components/CocktailCard.vue';
+import type { Cocktail } from './types/Cocktail';
 
-const cocktails = ref([]);
+const cocktails = ref<Cocktail[]>([]);
 const isLoading = ref(false);
 const isError = ref(false)
 
@@ -11,10 +12,14 @@ const loadCocktails = async () => {
   isLoading.value = true;
   try {
     const res = await fetchCocktails(3);
-    cocktails.value = res;
+    cocktails.value = res.map(cocktail => ({
+      ...cocktail,
+      isAlcoholic: cocktail.isAlcoholic.toString()
+    }));
     await new Promise(resolve => setTimeout(resolve, 1000));
   } catch (error) {
-    isError = true
+    console.log(error);
+    isError.value = true;
   } finally {
     isLoading.value = false;
   }
